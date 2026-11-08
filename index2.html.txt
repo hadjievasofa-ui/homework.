@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>График неравенства sin(x) >= 2x^2 - 1</title>
+    <!-- Подключаем Chart.js через CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        canvas {
+            max-height: 450px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>График: $\sin(x) \ge 2x^2 - 1$</h2>
+    <canvas id="mathChart"></canvas>
+</div>
+
+<script>
+    // Генерируем точки для оси X от -1 до 1 с шагом 0.05
+    const xValues = [];
+    const ySin = [];
+    const yParabola = [];
+
+    for (let x = -1.0; x <= 1.0; x += 0.05) {
+        xValues.push(Number(x.toFixed(2)));
+        ySin.push(Math.sin(x));
+        yParabola.push(2 * x * x - 1);
+    }
+
+    const data = {
+        labels: xValues,
+        datasets: [
+            {
+                label: 'y = sin(x)',
+                data: ySin,
+                borderColor: 'blue',
+                borderWidth: 2,
+                fill: false,
+                pointRadius: 0
+            },
+            {
+                label: 'y = 2x² - 1',
+                data: yParabola,
+                borderColor: 'red',
+                borderWidth: 2,
+                fill: false,
+                pointRadius: 0
+            }
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'x (ОДЗ: [-1, 1])'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'y'
+                    },
+                    min: -1.2,
+                    max: 1.2
+                }
+            }
+        }
+    };
+
+    const mathChart = new Chart(
+        document.getElementById('mathChart'),
+        config
+    );
+</script>
+
+</body>
+</html>
